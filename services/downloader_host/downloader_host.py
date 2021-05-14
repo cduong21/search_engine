@@ -71,9 +71,9 @@ def process_cdx_url(connection, url, batch_size=100, source='cc', **kwargs):
             record = result.fetch_warc_record()
 
             # FIXME: extract the information from the warc record
-            url = record['url']
-            accessed_at = record['timestamp']
-            html = record.content
+            url = record.rec_headers.get_header('WARC-Target-URI')
+            accessed_at = record.rec_headers.get_header('WARC-Date')
+            html = record[content]
             log.debug("url="+url)
 
             # FIXME: extract the metainfo using the metahtml library
